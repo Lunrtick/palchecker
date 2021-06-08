@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "Epistemic Model Checker"
+version = "0.1.0"
+description = ""
+authors = ["Gabriel Soicher <gabe@underware.co.za>"]
+packages = [
+    { include = "epistemic_model_checker" }
+]
+[tool.poetry.dependencies]
+python = "^3.9"
+graphviz = "^0.16"
+bitsets = "^0.8.2"
+antlr4-python3-runtime = "^4.9.2"
+guppy3 = "^3.1.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.3"
+black = {version = "^20.8b1", allow-prereleases = true}
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

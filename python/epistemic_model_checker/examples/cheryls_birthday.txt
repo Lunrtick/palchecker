@@ -1,0 +1,66 @@
+-- Cheryls Birthday in SMCDEL
+
+VARS May,June,July,August,           -- month
+     14,15,16,17,18,19  -- day of the month
+
+LAW  AND (
+  -- birthday is one of these ten possibilities:
+  OR ( (15 & May), (16 & May) , (19 & May)
+     , (17 & June), (18 & June)
+     , (14 & July), (16 & July)
+     , (14 & August), (15 & August), (17 & August)
+     ),
+  -- month must be unique:
+  AND ( ~(May & June), ~(May & July), ~(May & August)
+      , ~(June & July), ~(June & August)
+      , ~(July & August)
+      ),
+  -- days must be unique:
+  AND ( ~(14 & 15), ~(14 & 16), ~(14 & 17), ~(14 & 18), ~(14 & 19)
+      , ~(15 & 16), ~(15 & 17), ~(15 & 18), ~(15 & 19)
+      , ~(16 & 17), ~(16 & 18), ~(16 & 19)
+      , ~(17 & 18), ~(17 & 19)
+      , ~(18 & 19)
+      )
+  )
+
+OBS  albert:  May,June,July,August -- knows month
+     bernard: 14,15,16,17,18,19    -- knows day
+
+-- list all states
+WHERE?
+  Top
+
+-- the dialogue
+WHERE?
+   -- Albert: I don't know when Cheryl's birthday is, ...
+   < ! ~ OR ( albert knows that (15 & May), albert knows that (16 & May)
+            , albert knows that (19 & May), albert knows that (17 & June)
+            , albert knows that (18 & June), albert knows that (14 & July)
+            , albert knows that (16 & July), albert knows that (14 & August)
+            , albert knows that (15 & August), albert knows that (17 & August)
+            ) >
+   -- ... but I know that Bernard doesn't know too.
+   < ! ( albert knows that (
+         ~( OR ( bernard knows that (15 & May), bernard knows that (16 & May)
+               , bernard knows that (19 & May), bernard knows that (17 & June)
+               , bernard knows that (18 & June), bernard knows that (14 & July)
+               , bernard knows that (16 & July), bernard knows that (14 & August)
+               , bernard knows that (15 & August), bernard knows that (17 & August)
+               ) ) ) ) >
+   -- Bernard: First I did not know when Cheryl's birthday is, but now I know.
+   < ! OR ( bernard knows that (15 & May), bernard knows that (16 & May)
+          , bernard knows that (19 & May), bernard knows that (17 & June)
+          , bernard knows that (18 & June), bernard knows that (14 & July)
+          , bernard knows that (16 & July), bernard knows that (14 & August)
+          , bernard knows that (15 & August), bernard knows that (17 & August)
+          ) >
+   -- Albert: Then I also know when Cheryl's birthday is.
+   < ! OR ( albert knows that (15 & May), albert knows that (16 & May)
+          , albert knows that (19 & May), albert knows that (17 & June)
+          , albert knows that (18 & June), albert knows that (14 & July)
+          , albert knows that (16 & July), albert knows that (14 & August)
+	  , albert knows that (15 & August), albert knows that (17 & August)
+          ) >
+   -- (show all states where these announcements can be made in this order)
+   Top

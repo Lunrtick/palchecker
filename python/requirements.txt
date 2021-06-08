@@ -1,0 +1,4 @@
+antlr4-python3-runtime==4.9.2
+bitsets==0.8.2; python_version >= "3.6"
+graphviz==0.16; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.6.0")
+guppy3==3.1.0; python_version >= "3.5"

@@ -1,0 +1,34 @@
+-- Three Muddy Children in SMCDEL
+
+VARS alice_is_dirty,bob_is_dirty,carol_is_dirty
+
+LAW  Top
+
+OBS  alice: bob_is_dirty,carol_is_dirty
+     bob  : alice_is_dirty,carol_is_dirty
+     carol: alice_is_dirty,bob_is_dirty
+
+TRUE?
+  {alice_is_dirty,bob_is_dirty,carol_is_dirty}
+  AND(alice knows that (bob_is_dirty & carol_is_dirty), ~ alice knows whether alice_is_dirty)
+
+VALID?
+  AND( ~ (alice knows whether alice_is_dirty)
+  ,~ (bob   knows whether bob_is_dirty)
+  ,~ (carol knows whether carol_is_dirty) )
+
+WHERE?
+  < ! OR(alice_is_dirty,bob_is_dirty,carol_is_dirty) >
+  OR( (alice knows whether alice_is_dirty)
+  , (bob   knows whether bob_is_dirty)
+  , (carol knows whether carol_is_dirty) )
+
+VALID?
+  [ ! OR(alice_is_dirty,bob_is_dirty,carol_is_dirty) ]
+  [ ! AND( (~ (alice knows whether alice_is_dirty))
+      , (~ (bob   knows whether bob_is_dirty))
+      , (~ (carol knows whether carol_is_dirty)) ) ]
+  [ ! AND( (~ (alice knows whether alice_is_dirty))
+      , (~ (bob   knows whether bob_is_dirty))
+      , (~ (carol knows whether carol_is_dirty)) ) ]
+  AND(alice_is_dirty , bob_is_dirty , carol_is_dirty)
