@@ -12,4 +12,7 @@ RUN mkdir /app
 COPY --from=builder /app/cmake-release/maybethefastest /app/pal-model-checker
 COPY hyperfine /usr/bin/hyperfine
 WORKDIR /app
-ENTRYPOINT ["hyperfine", "--warmup", "1", "-m", "2", "-M", "50", "--export-json", "/var/results/mc-cpp.json", "--parameter-scan", "num_children", "3", "13", "./pal-model-checker {num_children}"]
+ENV MIN_CHILDREN=3
+ENV MAX_CHILDREN=12
+ENV RESULTS_FILENAME="mc-cpp"
+ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "./pal-model-checker {num_children}"

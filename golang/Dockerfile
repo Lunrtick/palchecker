@@ -6,5 +6,7 @@ RUN go build
 FROM fedora:34
 COPY --from=builder /app/bacprojgo /app/palcheckergo
 COPY hyperfine /usr/bin/hyperfine
-ENV minchildren=3
-ENTRYPOINT ["hyperfine", "--warmup", "1", "-m", "2", "-M", "50", "--export-json", "/var/results/mc-golang.json", "--parameter-scan", "num_children", "3", "11", "./app/palcheckergo -c {num_children}"]
+ENV MIN_CHILDREN=3
+ENV MAX_CHILDREN=12
+ENV RESULTS_FILENAME="mc-golang"
+ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "./app/palcheckergo -c {num_children}"

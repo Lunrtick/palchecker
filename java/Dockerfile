@@ -10,4 +10,7 @@ FROM openjdk:16-slim
 WORKDIR /app
 COPY --from=builder /app/target/ ./target
 COPY hyperfine /usr/bin/hyperfine
-ENTRYPOINT ["hyperfine", "--warmup", "1", "-m", "2", "-M", "50", "--export-json", "/var/results/mc-java.json", "--parameter-scan", "num_children", "3", "13", "java -jar target/EpistemicModelChecker-1.0-SNAPSHOT.jar {num_children}"]
+ENV MIN_CHILDREN=3
+ENV MAX_CHILDREN=12
+ENV RESULTS_FILENAME="mc-java"
+ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "java -jar target/EpistemicModelChecker-1.0-SNAPSHOT.jar {num_children}"

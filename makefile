@@ -33,13 +33,22 @@ build-cpp:
 bench:
 	@for l in $(languages); do \
 		make bench-$$l; \
+		make bench-$$l-1cpu; \
 	done
 
 bench-python:
-	docker run --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:python
+	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=9" -v $(CURDIR)/results:/var/results gabesoich/palchecker:python
+bench-python-1cpu:
+	echo "Nothing to do here"
 bench-golang:
-	docker run --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:golang
+	docker run --rm -e "MAX_CHILDREN=13" -v $(CURDIR)/results:/var/results gabesoich/palchecker:golang
+bench-golang-1cpu:
+	docker run --cpus 1 --cpuset-cpus 1 -e "MAX_CHILDREN=11" -e "RESULTS_FILENAME=mc-golang-1cpu" --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:golang
 bench-java:
-	docker run --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:java
+	docker run --rm -e "MAX_CHILDREN=14" -v $(CURDIR)/results:/var/results gabesoich/palchecker:java
+bench-java-1cpu:
+	docker run --cpus 1 --cpuset-cpus 1 -e "MAX_CHILDREN=12" -e "RESULTS_FILENAME=mc-java-1cpu" --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:java
 bench-cpp:
-	docker run --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
+	docker run --rm -e "MAX_CHILDREN=14" -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
+bench-cpp-1cpu:
+	docker run --cpus 1 --cpuset-cpus 1 -e "MAX_CHILDREN=12" -e "RESULTS_FILENAME=mc-cpp-1cpu" --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
