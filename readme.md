@@ -1,3 +1,9 @@
+# Quickstart
+
+1. `make build` - the Java container takes particularly long due to Maven's slow download speed (about 2mins on my machine)
+2. `make bench` - it may be advisable to tweak the MAX_CHILDREN value, as some benchmarks (which run at least 3 times each) can take as long as 10 mins for each run.
+3. `python plot.py` - this needs matplotlib to be installed, and requires python 3.8 or later. It generates plots in the results folder
+
 # Building the benchmark containers
 
 Run `make build` to build all of the benchmark containers. These all contain the model checker, and a copy of hyperfine for benchmarking. Running `make build-python`, for example, would build only the python container.

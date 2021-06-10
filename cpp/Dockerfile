@@ -14,5 +14,6 @@ COPY hyperfine /usr/bin/hyperfine
 WORKDIR /app
 ENV MIN_CHILDREN=3
 ENV MAX_CHILDREN=12
+ENV STOP_AFTER_MODEL_GENERATED=0
 ENV RESULTS_FILENAME="mc-cpp"
-ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "./pal-model-checker {num_children}"
+ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "./pal-model-checker {num_children} $STOP_AFTER_MODEL_GENERATED"

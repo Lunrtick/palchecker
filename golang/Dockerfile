@@ -8,5 +8,6 @@ COPY --from=builder /app/bacprojgo /app/palcheckergo
 COPY hyperfine /usr/bin/hyperfine
 ENV MIN_CHILDREN=3
 ENV MAX_CHILDREN=12
+ENV STOP_AFTER_MODEL_GENERATED=0
 ENV RESULTS_FILENAME="mc-golang"
-ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "./app/palcheckergo -c {num_children}"
+ENTRYPOINT hyperfine --warmup 1 -m 2 -M 50 --export-json /var/results/$RESULTS_FILENAME.json --parameter-scan num_children $MIN_CHILDREN $MAX_CHILDREN "./app/palcheckergo -c {num_children} -s $STOP_AFTER_MODEL_GENERATED"

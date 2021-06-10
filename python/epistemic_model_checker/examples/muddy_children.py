@@ -78,27 +78,17 @@ def build_muddy_children(n=3):
     return vars, law, obs, queries
 
 
-def benchmark_mc(n=3):
+def benchmark_mc(n=3, stop_early=False):
     vars, state_law, obs, queries = build_muddy_children(n)
     worlds = generate_worlds(list(vars), state_law, obs)
     model = KripkeModel(worlds)
+    if stop_early:
+        return
     solve_model(model, queries)
 
 
 if __name__ == "__main__":
     num_kids = int(sys.argv[1])
-    num_iters = int(sys.argv[2])
+    stop_early = int(sys.argv[2])
     time = 0.0
-    try:
-        if sys.argv[3] == "bench":
-            with HiddenPrints():
-                time = timeit.Timer(lambda: benchmark_mc(num_kids)).timeit(
-                    number=num_iters
-                )
-            print(
-                f"for {num_kids} children it took an average of {time / num_iters:.2f} seconds over {num_iters} runs"
-            )
-        else:
-            benchmark_mc(num_kids)
-    except IndexError:
-        benchmark_mc(num_kids)
+    benchmark_mc(num_kids, stop_early != 0)

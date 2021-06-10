@@ -31,6 +31,9 @@ public class Main {
         EpistemicModelChecker modelChecker = new EpistemicModelChecker();
         var mc = new MuddyChildren(Integer.parseInt(args[0]));
         KripkeModel model = modelChecker.generateModel(mc.variables, mc.stateLaw, mc.obs);
+        if (Integer.parseInt(args[1]) != 0) {
+            return;
+        }
         System.out.printf("Generated Model in %f seconds%n", (System.currentTimeMillis() - start) / 1_000.0);
         System.out.printf("Worlds: %d%n", model.worlds.size());
         var generated = System.currentTimeMillis();
