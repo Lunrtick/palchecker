@@ -1,7 +1,7 @@
 default:
 	@echo "Please have a look at the Makefile or run 'make all'."
 
-languages=python golang java cpp
+languages=python golang java cpp haskell haskell-symbolic
 
 build:
 	@for l in $(languages); do \
@@ -42,11 +42,15 @@ build-java:
 	docker build -t gabesoich/palchecker:java ./java
 build-cpp:
 	docker build -t gabesoich/palchecker:cpp ./cpp
+build-haskell:
+	docker build -t gabesoich/palchecker:haskell ./haskell
+build-haskell-symbolic:
+	echo "Uses the haskell container"
 
 bench-python:
 	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=9" -v $(CURDIR)/results:/var/results gabesoich/palchecker:python
 bench-python-1cpu:
-	echo "Nothing to do here"
+	echo "Already single threaded"
 bench-golang:
 	docker run --rm -e "MAX_CHILDREN=13" -v $(CURDIR)/results:/var/results gabesoich/palchecker:golang
 bench-golang-1cpu:
@@ -59,6 +63,14 @@ bench-cpp:
 	docker run --rm -e "MAX_CHILDREN=14" -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
 bench-cpp-1cpu:
 	docker run --cpus 1 --cpuset-cpus 1 -e "MAX_CHILDREN=12" -e "RESULTS_FILENAME=mc-cpp-1cpu" --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
+bench-haskell:
+	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=12" -v $(CURDIR)/results:/var/results gabesoich/palchecker:haskell
+bench-haskell-1cpu:
+	echo "Already single threaded"
+bench-haskell-symbolic:
+	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=14" -e "RESULTS_FILENAME=mc-haskell#symbolic" -e "SYMBOLIC_OR_EXPLICIT=symbolic" -v $(CURDIR)/results:/var/results gabesoich/palchecker:haskell
+bench-haskell-symbolic-1cpu:
+	echo "Already single threaded"
 
 bench-model-python:
 	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=9" -e "STOP_AFTER_MODEL_GENERATED=1" -e "RESULTS_FILENAME=mc-model-only-python" -v $(CURDIR)/results:/var/results gabesoich/palchecker:python
@@ -76,3 +88,11 @@ bench-model-cpp:
 	docker run --rm -e "MAX_CHILDREN=14" -e "STOP_AFTER_MODEL_GENERATED=1" -e "RESULTS_FILENAME=mc-model-only-cpp" -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
 bench-model-cpp-1cpu:
 	docker run --cpus 1 --cpuset-cpus 1 -e "MAX_CHILDREN=12" -e "STOP_AFTER_MODEL_GENERATED=1" -e "RESULTS_FILENAME=mc-model-only-cpp-1cpu" --rm -v $(CURDIR)/results:/var/results gabesoich/palchecker:cpp
+bench-model-haskell:
+	echo "Not implemented"
+bench-model-haskell-1cpu:
+	echo "Not implemented"
+bench-model-haskell-symbolic:
+	echo "Not implemented"
+bench-model-haskell-symbolic-1cpu:
+	echo "Not implemented"

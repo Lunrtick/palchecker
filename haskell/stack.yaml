@@ -1,0 +1,6 @@
+resolver: lts-17.15
+
+packages:
+    - "."
+extra-deps:
+    - HasCacBDD-0.1.0.3@sha256:74272b9dcd8a95141b241841b45a23e861d18973cfed436af3d4fff3344ba4dd,1700

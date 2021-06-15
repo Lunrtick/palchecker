@@ -1,8 +1,23 @@
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
+
+mpl.rcParams["axes.prop_cycle"] = mpl.cycler(
+    color=[
+        "#9c27b0",
+        "#673ab7",
+        "#2196f3",
+        "#00bcd4",
+        "#e91e63",
+        "#f44336",
+        "#4caf50",
+        "#8bc34a",
+        "#ffeb3b",
+    ]
+)
 
 
 @dataclass
@@ -19,7 +34,14 @@ class ResultSet:
 
 
 def filename_to_label(fname: str) -> str:
-    names = {"cpp": "C++", "golang": "Golang", "java": "Java", "python": "Python"}
+    names = {
+        "cpp": "C++",
+        "golang": "Golang",
+        "java": "Java",
+        "python": "Python",
+        "haskell": "Haskell",
+        "haskell#symbolic": "Haskell Symbolic",
+    }
     return " ".join(
         [
             names.get(s, "Single Threaded")
@@ -58,6 +80,7 @@ for res in sorted(results, key=lambda e: e.name):
         yerr=[r.stddev for r in res.results],
         label=res.name,
         capsize=4,
+        linestyle="dashed" if "haskell" in res.name.lower() else "solid",
     )
 plt.yscale("log")
 plt.legend(loc="best")

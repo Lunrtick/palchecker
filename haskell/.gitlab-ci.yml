@@ -1,0 +1,6 @@
+image: m4lvin/smcdel-ci:16.1
+
+build:
+  script:
+    - stack --no-terminal test --coverage
+    - stack --no-terminal bench --no-run-benchmarks
