@@ -3,7 +3,7 @@
 1. clone the repository locally
 1. make sure docker and make are installed
 1. `make build` - the Java container takes particularly long due to Maven's slow download speed (about 2mins on my machine)
-1. `make bench` - it may be advisable to tweak the MAX_CHILDREN value, as some benchmarks (which run at least 3 times each) can take as long as 10 mins for each run.
+1. `make bench` - it may be advisable to tweak the MAX_CHILDREN value, as some benchmarks (which run at least 3 times each) can take as long as 10 mins for each run on my machine. This would need to be changed for every individual benchmark in the makefile.
 1. `python plot.py` - this needs matplotlib to be installed, and requires python 3.8 or later. It generates plots in the results folder
 
 # Building the benchmark containers
