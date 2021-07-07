@@ -16,4 +16,13 @@ public class Query {
         this.formula = formula;
         this.propositions = propositions;
     }
+
+    @Override
+    public String toString() {
+        return "Query{" +
+                "type=" + type +
+                ", formula=" + formula +
+                ", propositions=" + propositions +
+                '}';
+    }
 }

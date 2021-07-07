@@ -5,11 +5,28 @@ import EpistemicModelChecker.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class MuddyChildren {
-    public List<String> variables;
-    public Formula stateLaw;
-    public Map<String, List<String>> obs;
-    public List<Query> queries;
+public class MuddyChildren extends SMCDELModel {
+    @Override
+    public List<String> getVariables() {
+        return variables;
+    }
+    @Override
+    public Formula getStateLaw() {
+        return stateLaw;
+    }
+    @Override
+    public Map<String, List<String>> getObs() {
+        return obs;
+    }
+    @Override
+    public List<Query> getQueries() {
+        return queries;
+    }
+
+    private final List<String> variables;
+    private final Formula stateLaw;
+    private final Map<String, List<String>> obs;
+    private final List<Query> queries;
 
     private List<Formula> buildAnnouncements(List<String> vars, int depth) {
         if (depth == vars.size()) {
@@ -60,7 +77,7 @@ public class MuddyChildren {
         stateLaw = new Formula(FormulaType.Top);
         obs = new HashMap<>();
         for (String v : variables) {
-            obs.put(v, variables.stream().filter(val -> val != v).toList());
+            obs.put(v, variables.stream().filter(val -> !val.equals(v)).toList());
         }
         queries = new ArrayList<>();
         queries.add(buildQuery(variables));

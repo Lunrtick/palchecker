@@ -73,7 +73,7 @@ bench-haskell-symbolic-1cpu:
 	echo "Already single threaded"
 
 bench-model-python:
-	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=9" -e "STOP_AFTER_MODEL_GENERATED=1" -e "RESULTS_FILENAME=mc-model-only-python" -v $(CURDIR)/results:/var/results gabesoich/palchecker:python
+	docker run --cpus 1 --cpuset-cpus 1 --rm -e "MAX_CHILDREN=10" -e "STOP_AFTER_MODEL_GENERATED=1" -e "RESULTS_FILENAME=mc-model-only-python" -v $(CURDIR)/results:/var/results gabesoich/palchecker:python
 bench-model-python-1cpu:
 	echo "Nothing to do here"
 bench-model-golang:

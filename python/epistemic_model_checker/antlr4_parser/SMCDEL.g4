@@ -32,6 +32,7 @@ KNOWS_WHETHER: 'knows whether';
 WS: [ \t\r\n]+ -> skip;
 
 propositions: VARS props = variable_list;
+
 binary_formula:
 	left = VARIABLE AMP right = VARIABLE	# binconj
 	| left = VARIABLE PIPE right = VARIABLE	# bindisj;
