@@ -1,5 +1,7 @@
 # Quickstart
 
+[![DOI](https://zenodo.org/badge/383729593.svg)](https://zenodo.org/badge/latestdoi/383729593)
+
 1. clone the repository locally
 1. make sure docker and make are installed
 1. `make build` - the Java container takes particularly long due to Maven's slow download speed (about 2mins on my machine)
